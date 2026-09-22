@@ -1,0 +1,1 @@
+{"root":["./src/main.tsx","./src/components/ui.tsx","./src/data/mock.ts","./src/hooks/useentries.ts","./src/pages/analysis.tsx","./src/pages/breathe.tsx","./src/pages/diary.tsx","./src/pages/home.tsx","./src/pages/me.tsx","./src/pages/record.tsx","./src/pages/regulate.tsx","./src/pages/trends.tsx","./src/types/index.ts"],"version":"5.9.3"}
