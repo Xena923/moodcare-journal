@@ -3,4 +3,26 @@ import {useNavigate,useParams} from 'react-router-dom';
 import {Button,Panel} from '../components/UI';
 import type {Entry} from '../types';
 const risk=/自杀|自尽|轻生|结束生命|不想活|伤害自己|自残|割腕|suicide|kill myself|self.harm/i;
-export function Analysis({entries}:{entries:Entry[]}){const nav=useNavigate();const {id}=useParams();const entry=entries.find(e=>e.id===id);const [more,setMore]=useState(false);const dangerous=!!entry&&risk.test(entry.content);return <main><div className="eyebrow">心情小站 · 情绪回声</div><h1>{dangerous?'你值得得到及时帮助':'陪你看见此刻的心情'}</h1>{dangerous?<Panel className="safety"><h3>先照顾你的安全</h3><p>你写下的内容可能涉及伤害自己的想法。请尽快联系身边信任的人陪伴你，并联系当地急救服务或心理危机援助热线。如果你正处于即时危险中，请立即拨打当地急救电话。</p><p>现在先移开可能伤害自己的物品，去一个有人陪伴的地方。</p></Panel>:<><Panel><span className="tiny-label">当前可能情绪</span><div className="chips"><span className="chip selected">焦虑</span><span className="chip selected">失落</span><span className="chip selected">自我怀疑</span></div></Panel><Panel><span className="tiny-label">可能触发因素</span><p>今天的负面工作反馈，可能让你把一次方案表现和自己的整体能力联系在了一起。</p></Panel><Panel><span className="tiny-label">AI 洞察 · 示例</span><p>你似乎比较在意自己是否把事情做好，因此外部评价可能比较容易影响你当下的情绪。</p></Panel><Panel className="care"><span className="tiny-label">给你的话</span><p>一次方案被否定，并不等于你的能力被否定。</p></Panel><div className="stack"><Button onClick={()=>nav('/regulate')}>让我平静一点 →</Button><Button soft onClick={()=>{setMore(true);nav('/record')}}>我想继续说说</Button><Button soft onClick={()=>nav('/regulate?mode=energize')}>我想重新振作</Button></div>{more&&<p>可以继续记录你的感受。</p>}</>}<p className="disclaimer">本产品用于日常情绪记录与自我关怀，不提供医学诊断，也不能替代专业心理咨询或医疗服务。</p></main>}
+export function Analysis({entries}:{entries:Entry[]}){
+  const nav=useNavigate();
+  const {id}=useParams();
+  const entry=entries.find(e=>e.id===id);
+  const [more,setMore]=useState(false);
+  const dangerous=!!entry&&risk.test(entry.content);
+  return <main className="analysis-page">
+    <div className="eyebrow">心情小站 · 情绪回声</div>
+    <h1>{dangerous?'你值得得到及时帮助':'翻开今天的心情日记'}</h1>
+    {dangerous?<Panel className="safety journal-paper"><h3>先照顾你的安全</h3><p>你写下的内容可能涉及伤害自己的想法。请尽快联系身边信任的人陪伴你，并联系当地急救服务或心理危机援助热线。如果你正处于即时危险中，请立即拨打当地急救电话。</p><p>现在先移开可能伤害自己的物品，去一个有人陪伴的地方。</p></Panel>:<>
+      <div className="journal-spread">
+        <Panel className="journal-page left-page"><span className="page-number">01</span><span className="tiny-label">今天可能出现的情绪</span><div className="chips"><span className="chip selected">焦虑</span><span className="chip selected">失落</span><span className="chip selected">自我怀疑</span></div><span className="page-flower">✿</span></Panel>
+        <Panel className="journal-page right-page"><span className="page-number">02</span><span className="tiny-label">可能发生了什么？</span><p>今天的负面工作反馈，可能让你把一次方案表现和自己的整体能力联系在了一起。</p></Panel>
+      </div>
+      <Panel className="journal-paper insight"><span className="tiny-label">日记里的小发现 · AI 示例</span><p>你似乎比较在意自己是否把事情做好，因此外部评价可能比较容易影响你当下的情绪。</p></Panel>
+      <Panel className="care quote-card"><span className="tiny-label">给今天的你一句话</span><p>“一次方案被否定，并不等于你的能力被否定。”</p></Panel>
+      <div className="choice-label">接下来，想做什么？</div>
+      <div className="stack rpg-choices"><Button onClick={()=>nav('/regulate')}>▶ 让我平静一点</Button><Button soft onClick={()=>{setMore(true);nav('/record')}}>▶ 我想继续说说</Button><Button soft onClick={()=>nav('/regulate?mode=energize')}>▶ 我想重新振作</Button></div>
+      {more&&<p>可以继续记录你的感受。</p>}
+    </>}
+    <p className="disclaimer">本产品用于日常情绪记录与自我关怀，不提供医学诊断，也不能替代专业心理咨询或医疗服务。</p>
+  </main>;
+}
